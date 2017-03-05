@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
-import java.util.StringTokenizer;
+
 
 /*
  *
@@ -26,9 +26,19 @@ public class Bases {
         // TODO code application logic her
 
         Scanner sc = new Scanner(System.in);//Capturar el dato desde la pantalla de tipo string
-        Persona p = new Persona();
-        String c = "";
-        int a = 0;
+        Scanner tecladoLine = new Scanner(System.in);////Capturar el dato sin espacios
+        Persona p = new Persona();//creo una nueva persona
+
+        //Declaro las varibles locales que voy a utilizar para insertar los registros
+        String identificador = "";
+        String cedula = "";
+        String nombre = "";
+        String dia_nacimiento = "";
+        String mes_nacimiento = "";
+        String anio_nacimiento = "";
+        String ganancia_anual = "";
+
+// Realizo  el menú y submenu ,con switch y case.
         int opcion = 0;
 
         while (opcion != 4) {
@@ -54,12 +64,11 @@ public class Bases {
                             + "6.IR A UN REGISTRO \n"
                             + "7.IMPORTAR ARCHIVO \n"
                             + "8.EXPORTAR ARCHIVO \n"
-                            + "9.SALIR \n"
                     );
                     System.out.println("***************************************");
 
-                    System.out.print("Digite la opción:\n ");
-
+                    System.out.print("Digite la opción:");
+                    break;
                 case 2:
                     System.out.println("***************** SUBMENU **************\n"
                             + "1.INSERTAR REGISTRO\n"
@@ -70,11 +79,11 @@ public class Bases {
                             + "6.IR A UN REGISTRO \n"
                             + "7.IMPORTAR ARCHIVO \n"
                             + "8.EXPORTAR ARCHIVO \n"
-                            + "9.SALIR \n"
                     );
                     System.out.println("****************************************");
 
-                    System.out.print("Digite la opción:\n ");
+                    System.out.print("Digite la opción:");
+                    break;
 
                 case 3:
                     System.out.println("***************** SUBMENU **************\n"
@@ -86,41 +95,65 @@ public class Bases {
                             + "6.IR A UN REGISTRO \n"
                             + "7.IMPORTAR ARCHIVO \n"
                             + "8.EXPORTAR ARCHIVO \n"
-                            + "9.SALIR \n"
                     );
                     System.out.println("****************************************");
 
-                    System.out.print("Digite la opción:\n");
+                    System.out.print("Digite la opción:");
 
                     opcion = sc.nextInt();
                     switch (opcion) {
 
-                        case 1://ADICIONAR UN REGISTRO
-                            System.out.println("ADICIONAR REGISTRO");
+                        case 1://INSERTARMOS LOS REGISTROS
+
                             System.out.print("Digite el identificador: ");
-                            a = sc.nextInt();
-                            p.setIdentificador(a);
+                            identificador = sc.next();
+                            p.setIdentificador(identificador);
                             System.out.print("Digite la cedula: ");
-                            c = sc.next();
-                            p.setCedula(c);
+                            cedula = sc.next();
+                            p.setCedula(cedula);
                             System.out.print("Digite el nombre: ");
-                            c = sc.next();
-                            p.setNombre(c);
+                            nombre = tecladoLine.nextLine();//Lee una cadena hasta el final de la linea
+                            p.setNombre(nombre);
                             System.out.print("Digite el dia_nacimiento: ");
-                            c = sc.next();
-                            p.setDia_nacimiento(c);
+                            dia_nacimiento = sc.next();
+                            p.setDia_nacimiento(dia_nacimiento);
                             System.out.print("Digite el mes_nacimiento: ");
-                            c = sc.next();
-                            p.setMes_nacimiento(c);
+                            mes_nacimiento = sc.next();
+                            p.setMes_nacimiento(mes_nacimiento);
                             System.out.print("Digite el año_nacimiento: ");
-                            a = sc.nextInt();
-                            p.setAno_nacimiento(a);
-                            System.out.print("Digite la ganancia_anual: ");
-                            a = sc.nextInt();
-                            p.setGanancia_anual(a);
+                            anio_nacimiento = sc.next();
+                            p.setAno_nacimiento(anio_nacimiento);
+                            System.out.print("Digite la ganancia_anual:");
+                            ganancia_anual = sc.next();
+                            p.setGanancia_anual(ganancia_anual);
+
+                            //Abro stream, crea el fichero si no existe 
+                            File TextFile = new File("D:\\Base_Datosc.txt");
+                            FileWriter TextOut = new FileWriter(TextFile, true);
+
+                            //Escribimos en el fichero un String 
+                            TextOut.write("\r\n");
+                            TextOut.write("\r\n" + p.getIdentificador());
+                            TextOut.write("|");
+                            TextOut.write(p.getCedula());
+                            TextOut.write("|");
+                            TextOut.write(p.getNombre());
+                            TextOut.write("|");
+                            TextOut.write(p.getDia_nacimiento());
+                            TextOut.write("|");
+                            TextOut.write(p.getMes_nacimiento());
+                            TextOut.write("|");
+                            TextOut.write(p.getAno_nacimiento());
+                            TextOut.write("|");
+                            TextOut.write(p.getGanancia_anual());
+                            TextOut.write("\n");
+
+                            TextOut.close();
+
                             System.out.println("Registros guardados \n");
                             break;
-                        case 2://
+
+                        case 2://ELIMINAR REGISTROS
                             System.out.println("INGRESE DATO A ELIMINAR");
                             String dat = sc.next();
                             System.out.print("Dato eliminado \n");
@@ -142,15 +175,7 @@ public class Bases {
                                 // sCadena = dato;
                                 //System.out.println(dato);
                                 try {
-                                    //Abro stream, crea el fichero si no existe
 
-                                    //FileWriter fw = new FileWriter("D:\\Base_Datosc.txt");
-                                    //Escribimos en el fichero un String y un caracter 97 (a)
-                                    //fw.write("Esto es una prueb/n");
-                                    // fw.write(97);
-                                    //Cierro el stream
-                                    //fw.close();
-                                    //Abro el stream, el fichero debe existir
                                     FileReader fr = new FileReader("D:\\Base_Datosc.txt");
                                     //Leemos el fichero y lo mostramos por pantalla
 
@@ -214,10 +239,133 @@ public class Bases {
 
                             System.out.print("Dato actualizado \n");
                             break;
+
                         case 5:
                             System.out.println("BUSCAR DATO ");
-                            System.out.print("Digite dato:\n");
+                            System.out.print("Digite el numero de cedula:\n ");
+
+                            String ced = null;
+                            ced = sc.next();
+                            char[] Buscar = new char[ced.length()];
+                            
+                            char[] cedula2=new char[100];
+                            for (int i = 0; i < ced.length(); i++) {
+                                Buscar[i] = ced.charAt(i);
+
+                            }
+
+                            try {
+
+                                FileReader fr = new FileReader("D:\\Base_Datosc.txt");
+                                //Leemos el fichero y lo mostramos por pantalla
+
+                                int valor2 = fr.read();
+                                
+                                int i = 1;
+                                int nuevo = 1;
+                                int N = 0;
+                                boolean nuevoi = false;
+                                boolean saltar = false;
+                                int volver = 0;
+                                boolean encontra = false;
+
+                                while (valor2 != -1) {
+
+                                    if ((char) valor2 == '\n') {
+                                        i = 0;
+
+                                    } else {
+
+                                       cedula2[1] = (char)valor2;
+                                        i++;
+
+                                    }
+
+                                    if (Buscar[volver] == (char) valor2) {
+                                        volver++;
+                                        if (volver == Buscar.length) {
+
+                                            System.out.println("\n\n\n  PERSONA ENCONTRADA \n\n\n");
+                                            System.out.println("\n\n*************************************************************************************************************\n\n");
+
+                                        }
+                                    } else if (encontra != true) {
+                                        volver = 1;
+                                    } else 
+                                        
+                                        if ((char) valor2== '|') {
+                                        System.out.println("\n");
+                                        
+                                        if (nuevo == 1 && nuevoi == false) {
+                                            i = 1;
+                                            N = 1;
+
+                                            while (true) {
+
+                                                if (cedula2[i] == '|') {
+                                                    break;
+                                                } else {
+                                                    i++;
+                                                }
+                                            }
+                                            System.out.println("Id:  ");
+
+                                            while (true) {
+                                                if (i == N) {
+                                                    System.out.println("\n");
+                                                    System.out.println("cedula: ");
+                                                    break;
+                                                } else {
+                                                    System.out.println(cedula2[N]);
+                                                    N++;
+                                                }
+
+                                            }
+                                            N = 1;
+                                            System.out.println("\nNombre:  ");
+                                            nuevo++;
+                                            nuevoi = true;
+
+                                        }
+                                        if (nuevo == 2 && nuevoi == false) {
+                                            System.out.println("Dia de nacimiento:  ");
+                                            nuevo++;
+                                            nuevoi = true;
+                                        }
+                                        if (nuevo == 3 && nuevoi == false) {
+                                            System.out.println("Mes de nacimiento:  ");
+                                            nuevo++;
+                                            nuevoi = true;
+                                        }
+                                        if (nuevo == 4 && nuevoi == false) {
+                                            System.out.println("Anio de nacimiento:  ");
+                                            nuevoi = true;
+                                            nuevo++;
+                                        }
+                                        if (nuevo == 5 && nuevoi == false) {
+                                            System.out.println("Ganancia anual:  ");
+                                            nuevoi = true;
+                                            nuevo++;
+                                        }
+
+                                    } else if ((char) valor2 == '\n') {
+                                        saltar = true;
+                                        break;
+                                    } else if (saltar != true) {
+                                        System.out.println(valor2);
+                                        nuevoi = false;
+                                    }
+
+                                }
+
+                                //Cerramos el stream
+                                fr.close();
+                            } catch (IOException e) {
+                                System.out.println("Error E/S: " + e);
+                            }
+
                             break;
+
                         case 6:
                             System.out.println("IR A UN NUMERO DE REGISTRO");
                             break;
@@ -238,5 +386,3 @@ public class Bases {
         }
     }
 }
-
-    
